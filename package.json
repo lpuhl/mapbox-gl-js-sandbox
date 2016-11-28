@@ -1,0 +1,24 @@
+{
+  "name": "mapbox-gl-js-sandbox",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lpuhl/mapbox-gl-js-sandbox.git"
+  },
+  "author": "Liz Puhl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lpuhl/mapbox-gl-js-sandbox/issues"
+  },
+  "homepage": "https://github.com/lpuhl/mapbox-gl-js-sandbox#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}
