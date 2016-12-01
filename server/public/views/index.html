@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <title>Mapbox GL JS What?!</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.css' rel='stylesheet' />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.css" rel="stylesheet" />
 
     <style>
         body { margin:0; padding:0; }
@@ -14,33 +14,48 @@
 </head>
 <body>
 
-<div id='map'></div>
+<div id="map"></div>
 <script>
-mapboxgl.accessToken = 'pk.eyJ1IjoiZWxpemFiZXRoIiwiYSI6IkNmdnB1cmMifQ.NlNxa3kOsDxhWJVGxZsPGg';
+mapboxgl.accessToken = "pk.eyJ1IjoiZWxpemFiZXRoIiwiYSI6IkNmdnB1cmMifQ.NlNxa3kOsDxhWJVGxZsPGg";
 var map = new mapboxgl.Map({
-    container: 'map', // container id
-    style: 'mapbox://styles/mapbox/streets-v9', //stylesheet location
+    container: "map", // container id
+    style: "mapbox://styles/mapbox/streets-v9", //stylesheet location
     center: [-93.25, 44.97], // starting position
     zoom: 10 // starting zoom
 });
 
-map.on('load', function() {
-  map.addSource('MNbikeways', {
-    'type': 'geojson',
-    'data': './../../data/bikeways.geojson'
+map.on("load", function() {
+  map.addSource("MNbikeways", {
+    "type": "geojson",
+    "data": "./../../data/bikeways.geojson"
   });
   map.addLayer({
-      'id': 'MNbikeways',
-      'type': 'line',
-      'source': 'MNbikeways',
-      'source-layer': 'MNbikeways',
-      'layout': {
-          // visibility: 'visible',
-          'line-join': 'round'
+      "id": "MNbikeways",
+      "type": "line",
+      "source": "MNbikeways",
+      "source-layer": "MNbikeways",
+      "layout": {
+          // visibility: "visible",
+          "line-join": "round"
       },
-      'paint': {
-          'line-color': 'rgba(61,153,80,0.55)',
-          'line-width': 8
+      "paint": {
+          "line-color": "rgba(61,153,80,0.55)",
+          "line-width": 3
+      }
+  });
+  map.addSource("NiceRide", {
+    "type": "geojson",
+    "data": "./../../data/niceride.json"
+  });
+  map.addLayer({
+      "id": "NiceRide",
+      "type": "symbol",
+      "source": "NiceRide",
+      "source-layer": "NiceRide",
+      "layout": {
+          // visibility: "visible",
+          // "line-join": "round"
+          "icon-image": "{icon}-15"
       }
   });
 
