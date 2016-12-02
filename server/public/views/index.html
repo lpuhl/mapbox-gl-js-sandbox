@@ -6,62 +6,81 @@
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.js"></script>
     <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.css" rel="stylesheet" />
+    <link href="./styles/styles.css" rel="stylesheet" />
 
     <style>
         body { margin:0; padding:0; }
         #map { position:absolute; top:0; bottom:0; width:100%; }
     </style>
 </head>
+
 <body>
+  <div class='sidebar pad2'>Listing</div>
+  <div id="map" class="map pad2">Map</div>
+  <script>
+  mapboxgl.accessToken = "pk.eyJ1IjoiZWxpemFiZXRoIiwiYSI6IkNmdnB1cmMifQ.NlNxa3kOsDxhWJVGxZsPGg";
 
-<div id="map"></div>
-<script>
-mapboxgl.accessToken = "pk.eyJ1IjoiZWxpemFiZXRoIiwiYSI6IkNmdnB1cmMifQ.NlNxa3kOsDxhWJVGxZsPGg";
-var map = new mapboxgl.Map({
-    container: "map", // container id
-    style: "mapbox://styles/mapbox/streets-v9", //stylesheet location
-    center: [-93.25, 44.97], // starting position
-    zoom: 10 // starting zoom
-});
-
-map.on("load", function() {
-  map.addSource("MNbikeways", {
-    "type": "geojson",
-    "data": "./../../data/bikeways.geojson"
-  });
-  map.addLayer({
-      "id": "MNbikeways",
-      "type": "line",
-      "source": "MNbikeways",
-      "source-layer": "MNbikeways",
-      "layout": {
-          // visibility: "visible",
-          "line-join": "round"
-      },
-      "paint": {
-          "line-color": "rgba(61,153,80,0.55)",
-          "line-width": 3
-      }
-  });
-  map.addSource("NiceRide", {
-    "type": "geojson",
-    "data": "./../../data/niceride.json"
-  });
-  map.addLayer({
-      "id": "NiceRide",
-      "type": "symbol",
-      "source": "NiceRide",
-      "source-layer": "NiceRide",
-      "layout": {
-          // visibility: "visible",
-          // "line-join": "round"
-          "icon-image": "{icon}-15"
-      }
+  var map = new mapboxgl.Map({
+      container: "map", // container id
+      style: "mapbox://styles/mapbox/light-v9", //stylesheet location
+      center: [-93.25, 44.97], // starting position
+      zoom: 10 // starting zoom
   });
 
-})
+  var stations = {
+  };
 
-</script>
+  map.on("load", function() {
+    map.addSource("MNbikeways", {
+      type: "geojson",
+      data: "./../../data/bikeways.geojson"
+    });
+    map.addLayer({
+        id: "MNbikeways",
+        type: "line",
+        source: "MNbikeways",
+        "source-layer": "MNbikeways",
+        layout: {
+            // visibility: "visible",
+            "line-join": "round"
+        },
+        paint: {
+            "line-color": "rgba(61,153,80,0.55)",
+            "line-width": 3
+        }
+    });
+    map.addSource("NiceRide", {
+      type: "geojson",
+      data: "./../../data/bikeways.geojson"
+    });
+    map.addLayer({
+       id: 'locations',
+       type: 'symbol',
+       source: 'NiceRide',
+       layout: {
+         'icon-image': 'bicycle-15',
+         'icon-allow-overlap': true
+       }
+     });
+
+    // stores.features.forEach(function(marker) {
+    //   // Create a div element for the marker
+    //   var el = document.createElement('div');
+    //   // Add a class called 'marker' to each div
+    //   el.className = 'marker';
+    //   // By default the image for your custom marker will be anchored
+    //   // by its top left corner. Adjust the position accordingly
+    //   el.style.left = '-28px';
+    //   el.style.top = '-46px';
+    //   // Create the custom markers, set their position, and add to map
+    //   new mapboxgl.Marker(el)
+    //     .setLngLat(marker.geometry.coordinates)
+    //     .addTo(map);
+    // });
+
+  })
+
+  </script>
 
 </body>
 </html>
