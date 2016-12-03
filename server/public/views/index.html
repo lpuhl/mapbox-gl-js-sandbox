@@ -15,7 +15,13 @@
 </head>
 
 <body>
-  <div class='sidebar pad2'>Listing</div>
+  <div class='sidebar'>
+    <div class='heading'>
+      <h1>Our locations</h1>
+    </div>
+    <div id='listings' class='listings'></div>
+  </div>
+
   <div id="map" class="map pad2">Map</div>
   <script>
   mapboxgl.accessToken = "pk.eyJ1IjoiZWxpemFiZXRoIiwiYSI6IkNmdnB1cmMifQ.NlNxa3kOsDxhWJVGxZsPGg";
@@ -27,8 +33,38 @@
       zoom: 10 // starting zoom
   });
 
-  var stations = {
-  };
+
+  function buildLocationList(data) {
+    // Iterate through the list of stores
+    for (i = 0; i < data.features.length; i++) {
+      var currentFeature = data.features[i];
+      // Shorten data.feature.properties to just `prop` so we're not
+      // writing this long form over and over again.
+      var prop = currentFeature.properties;
+      // Select the listing container in the HTML and append a div
+      // with the class 'item' for each store
+      var listings = document.getElementById('listings');
+      var listing = listings.appendChild(document.createElement('div'));
+      listing.className = 'item';
+      listing.id = 'listing-' + i;
+
+      // Create a new link with the class 'title' for each store
+      // and fill it with the store address
+      var link = listing.appendChild(document.createElement('a'));
+      link.href = '#';
+      link.className = 'title';
+      link.dataPosition = i;
+      link.innerHTML = prop.Station;
+
+      // Create a new div with the class 'details' for each store
+      // and fill it with the city and phone number
+      var details = listing.appendChild(document.createElement('div'));
+      details.innerHTML = prop.Terminal;
+      // if (prop.phone) {
+      //   details.innerHTML += ' &middot; ' + prop.phoneFormatted;
+      // }
+    }
+  }
 
   map.on("load", function() {
     map.addSource("MNbikeways", {
@@ -51,7 +87,7 @@
     });
     map.addSource("NiceRide", {
       type: "geojson",
-      data: "./../../data/bikeways.geojson"
+      data: stations
     });
     map.addLayer({
        id: 'locations',
@@ -62,6 +98,9 @@
          'icon-allow-overlap': true
        }
      });
+
+
+     buildLocationList(stations);
 
     // stores.features.forEach(function(marker) {
     //   // Create a div element for the marker
