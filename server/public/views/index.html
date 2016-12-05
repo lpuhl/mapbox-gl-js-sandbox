@@ -5,6 +5,8 @@
     <title>Mapbox GL JS What?!</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.js"></script>
+    <!-- <script type="text/javascript" src="./scripts/client-app.js"></script> -->
+
     <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.23.0/mapbox-gl.css" rel="stylesheet" />
     <link href="./styles/styles.css" rel="stylesheet" />
 
@@ -33,40 +35,111 @@
       zoom: 10 // starting zoom
   });
 
-
-  function buildLocationList(data) {
-    // Iterate through the list of stores
-    for (i = 0; i < data.features.length; i++) {
-      var currentFeature = data.features[i];
-      // Shorten data.feature.properties to just `prop` so we're not
-      // writing this long form over and over again.
-      var prop = currentFeature.properties;
-      // Select the listing container in the HTML and append a div
-      // with the class 'item' for each store
-      var listings = document.getElementById('listings');
-      var listing = listings.appendChild(document.createElement('div'));
-      listing.className = 'item';
-      listing.id = 'listing-' + i;
-
-      // Create a new link with the class 'title' for each store
-      // and fill it with the store address
-      var link = listing.appendChild(document.createElement('a'));
-      link.href = '#';
-      link.className = 'title';
-      link.dataPosition = i;
-      link.innerHTML = prop.Station;
-
-      // Create a new div with the class 'details' for each store
-      // and fill it with the city and phone number
-      var details = listing.appendChild(document.createElement('div'));
-      details.innerHTML = prop.Terminal;
-      // if (prop.phone) {
-      //   details.innerHTML += ' &middot; ' + prop.phoneFormatted;
-      // }
-    }
-  }
+  var stations = {
+      "type": "FeatureCollection",
+      "features": [{
+          "type": "Feature",
+          "properties": {
+              "Terminal": 30000,
+              "Station": "100 Main Street SE",
+              "NB_Docks": 27,
+              "Notes": null
+          },
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-93.256551,
+                  44.984892
+              ]
+          }
+      }, {
+          "type": "Feature",
+          "properties": {
+              "Terminal": 30001,
+              "Station": "25th Street & 33rd Ave S",
+              "NB_Docks": 15,
+              "Notes": null
+          },
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-93.223374,
+                  44.957341
+              ]
+          }
+      }, {
+          "type": "Feature",
+          "properties": {
+              "Terminal": 30002,
+              "Station": "Riverside Ave & 23rd Ave S",
+              "NB_Docks": 15,
+              "Notes": null
+          },
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-93.240149,
+                  44.967115
+              ]
+          }
+      }, {
+          "type": "Feature",
+          "properties": {
+              "Terminal": 30003,
+              "Station": "Plymouth Ave N &  N Oliver Ave",
+              "NB_Docks": 15,
+              "Notes": null
+          },
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-93.306269,
+                  44.991412
+              ]
+          }
+      }, {
+          "type": "Feature",
+          "properties": {
+              "Terminal": 30004,
+              "Station": "11th Street & Hennepin",
+              "NB_Docks": 23,
+              "Notes": null
+          },
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-93.27869,
+                  44.97534
+              ]
+          }
+      }, {
+          "type": "Feature",
+          "properties": {
+              "Terminal": 30005,
+              "Station": "Hennepin & Central Avenue NE",
+              "NB_Docks": 15,
+              "Notes": null
+          },
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-93.25392,
+                  44.98889
+              ]
+          }
+      }, {
+          "type": "Feature",
+          "properties": {
+              "Terminal": 30006,
+              "Station": "YWCA Downtown",
+              "NB_Docks": 23,
+              "Notes": null
+          },
+          "geometry": {
+              "type": "Point",
+              "coordinates": [-93.276435,
+                  44.972217
+              ]
+          }
+      }]
+    };
 
   map.on("load", function() {
+
     map.addSource("MNbikeways", {
       type: "geojson",
       data: "./../../data/bikeways.geojson"
@@ -99,7 +172,6 @@
        }
      });
 
-
      buildLocationList(stations);
 
     // stores.features.forEach(function(marker) {
@@ -118,6 +190,38 @@
     // });
 
   })
+
+  function buildLocationList(data) {
+    // Iterate through the list of stores
+    for (i = 0; i < data.features.length; i++) {
+      var currentFeature = data.features[i];
+      // Shorten data.feature.properties to just `prop` so we're not
+      // writing this long form over and over again.
+      var prop = currentFeature.properties;
+      // Select the listing container in the HTML and append a div
+      // with the class 'item' for each store
+      var listings = document.getElementById('listings');
+      var listing = listings.appendChild(document.createElement('div'));
+      listing.className = 'item';
+      listing.id = 'listing-' + i;
+
+      // Create a new link with the class 'title' for each store
+      // and fill it with the store address
+      var link = listing.appendChild(document.createElement('a'));
+      link.href = '#';
+      link.className = 'title';
+      link.dataPosition = i;
+      link.innerHTML = prop.Station;
+
+      // Create a new div with the class 'details' for each store
+      // and fill it with the city and phone number
+      var details = listing.appendChild(document.createElement('div'));
+      details.innerHTML = prop.Terminal;
+      // if (prop.phone) {
+      //   details.innerHTML += ' &middot; ' + prop.phoneFormatted;
+      // }
+    }
+  }
 
   </script>
 
